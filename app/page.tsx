@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { AuthButton } from "./components/NavMenu";
 
 export default function Home() {
   return (
@@ -8,32 +10,16 @@ export default function Home() {
           <h1 className="text-5xl font-bold">Entropy</h1>
           <p className="py-6">Create or join a group</p>
           <div className="flex flex-col">
-            <button className="btn btn-primary m-2">
+            <AuthButton />
+            {/* <button className="btn btn-primary m-2">
               Login
-            </button>
-            <button className="btn btn-primary m-2 ">
+            </button> */}
+            {/* <button className="btn btn-primary m-2 ">
               Create Account
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// import NextAuth from "next-auth";
-// import GoogleProvider from "next-auth/providers/google";
-
-// export const authOptions = {
-//     providers: [
-//         GoogleProvider({
-//             clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-//             clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-//           })
-//     ],
-//     // secret: process.env.NEXTAUTH_SECRET,
-// };
-
-// export const handler = NextAuth(authOptions);
-
-// export { handler as GET, handler as POST };
