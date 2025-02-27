@@ -44,6 +44,7 @@ const NewGroupPage = () => {
 
     // inserting emails into "group members"
     const allEmails = [session.user.email, ...emails];
+    console.log("allEmails: ", allEmails);
     const { data, error } = await supabase
       .from("group_members")
       .insert(
@@ -60,6 +61,7 @@ const NewGroupPage = () => {
     } else {
       console.log("Group created successfully: ", data);
     }
+    console.log("groupID (from NewGroup): ", groupData.id);
     router.push(`/groups/${groupData.id}`);
   };
 

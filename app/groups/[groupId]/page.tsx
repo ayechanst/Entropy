@@ -1,28 +1,34 @@
 "use client";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-// import { supabase } from "../../../lib/supabaseClient";
+import { useRouter, useParams } from "next/navigation";
 import { supabase } from "@/app/lib/supabaseClient";
 
-const GroupPage = ({
-  params,
-}: {
-  params: { group_id: string };
+const GroupPage = (props: {
+  params: Promise<{ groupId: string }>;
 }) => {
+  const params = use(props.params);
   const { data: session } = useSession();
   const router = useRouter();
+
+  console.log("Group ID: ", params.groupId);
+  console.log("GroupPage params: ", params);
+
   const [members, setMembers] = useState<string[]>([]);
   const [isAuthorized, setIsAuthorized] = useState<
     boolean | null
   >(null);
+
   useEffect(() => {
     if (!session?.user?.email) return;
+    if (!params?.groupId) return;
+    console.log("Group ID: ", params.groupId);
+
     const fetchGroupData = async () => {
       const { data, error } = await supabase
         .from("group_members")
         .select("email")
-        .eq("group_id", params.group_id);
+        .eq("group_id", params.groupId);
       if (error) {
         console.error(
           "Error fetching group members:",
@@ -42,7 +48,7 @@ const GroupPage = ({
       }
     };
     fetchGroupData();
-  }, [session, params.group_id, router]);
+  }, [session, params.groupId, router]);
   if (isAuthorized === null) return <p>loading...</p>;
   if (!isAuthorized) return null;
   return (
