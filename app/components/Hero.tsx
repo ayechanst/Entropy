@@ -1,7 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { AuthButton } from "./AuthButton";
-import Link from "next/link";
 import UserGroups from "./UserGroups";
 
 export const Hero = () => {
@@ -16,12 +15,6 @@ export const Hero = () => {
           {session ? (
             <div className="flex flex-col">
               <UserGroups />
-              <Link
-                href="/newGroup"
-                className="btn btn-primary"
-              >
-                Create New Group
-              </Link>
               <AuthButton />
             </div>
           ) : (

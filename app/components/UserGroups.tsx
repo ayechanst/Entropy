@@ -23,8 +23,8 @@ const UserGroups = () => {
   }, [userEmail]);
 
   return (
-    <div className="hero bg-base-200 flex items-center justify-center">
-      <div className="card bg-neutral text-neutral-content w-96">
+    <div className="hero flex items-center justify-center">
+      <div className="card  text-neutral-content w-96">
         <div className="card-body items-center text-center">
           <div className="flex flex-col items-center gap-4">
             {groups.map((group) => (
@@ -36,6 +36,12 @@ const UserGroups = () => {
                 {group.name}
               </Link>
             ))}
+            <Link
+              href="/newGroup"
+              className="btn btn-primary w-full"
+            >
+              +
+            </Link>
           </div>
         </div>
       </div>
