@@ -3,52 +3,41 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { supabase } from "@/app/lib/supabaseClient";
+import { fetchGroups } from "../hooks/fetchGroups";
 
+// needs groups
 const UserGroups = () => {
   const { data: session } = useSession();
   const [groups, setGroups] = useState<
     { id: string; name: string }[]
   >([]);
   const userEmail = session?.user?.email;
-  if (!userEmail) return;
+
   useEffect(() => {
-    const fetchGroups = async () => {
-      const { data, error } = await supabase
-        .from("group_members")
-        .select("group_id, groups(name)")
-        .eq("email", userEmail);
-
-      if (error) {
-        console.log("Error fetching groups:", error);
-        return;
-      }
-
-      const userGroups =
-        data?.map((entry: any) => ({
-          id: entry.group_id,
-          name: entry.groups.name,
-        })) ?? [];
-
+    if (!userEmail) return;
+    const loadGroups = async () => {
+      const userGroups = await fetchGroups(userEmail);
       setGroups(userGroups);
     };
-    fetchGroups();
+    loadGroups();
   }, [userEmail]);
 
   return (
-    <div>
-      <div className="flex flex-col items-center gap-2">
-        <h2 className="text-xl font-semibold mb-2">
-          Your Groups
-        </h2>
-        {groups.map((group) => (
-          <Link
-            key={group.id}
-            href={`/group/${group.id}`}
-            className="btn btn-secondary"
-          >
-            {group.name}
-          </Link>
-        ))}
+    <div className="hero bg-base-200 flex items-center justify-center">
+      <div className="card bg-neutral text-neutral-content w-96">
+        <div className="card-body items-center text-center">
+          <div className="flex flex-col items-center gap-4">
+            {groups.map((group) => (
+              <Link
+                key={group.id}
+                href={`/groups/${group.id}`}
+                className="btn btn-secondary w-full"
+              >
+                {group.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
