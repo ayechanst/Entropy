@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { supabase } from "../lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 const NewGroupPage = () => {
   const { data: session } = useSession();
   const [groupName, setGroupName] = useState("");
   const [emails, setEmails] = useState([""]);
+  const router = useRouter();
 
   const addEmailField = () => {
     setEmails([...emails, ""]);
@@ -58,6 +60,7 @@ const NewGroupPage = () => {
     } else {
       console.log("Group created successfully: ", data);
     }
+    router.push(`/groups/${groupData.id}`);
   };
 
   return (
