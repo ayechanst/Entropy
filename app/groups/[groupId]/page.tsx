@@ -1,38 +1,58 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { fetchUsers } from "@/app/hooks/fetchUsers";
 import YourTasks from "@/app/components/YourTasks";
 import Table from "@/app/components/Table";
 import Footer from "@/app/components/Footer";
+import { useGroupStore } from "@/app/hooks/useGroupStore";
+import { fetchUsers } from "@/app/hooks/fetchUsers";
 
-// needs users in a group
+// this needs group info
 const GroupPage = (props: {
   params: Promise<{ groupId: string }>;
 }) => {
   const params = use(props.params);
+  const groupId = params.groupId; // we already have the groupId
   const { data: session } = useSession();
-  const router = useRouter();
-  const [members, setMembers] = useState<string[]>([]);
+  const userEmail = session?.user?.email;
+  const users = useGroupStore((state) => state.users);
+  const fetchGroupUsers = useGroupStore(
+    (state) => state.fetchGroupUsers
+  );
+  // const { users } = useGroupStore();
+  // const [users, setUsers] = useState<{ email: string }[]>(
+  //   []
+  // );
 
   useEffect(() => {
-    // will eventually need to fetch all data associated with the group
-    const fetchGroupData = async () => {
-      const userEmails = await fetchUsers(params.groupId);
-      setMembers(userEmails);
+    const loadUsers = async () => {
+      // const getUsers = useGroupStore(
+      fetchGroupUsers(groupId);
+
+      //   (state) => state.fetchGroupUsers
+      // );
+      //   const users = await fetchUsers(groupId);
+      //   setUsers(users);
     };
-    fetchGroupData();
-  }, [session, params.groupId, router]);
+    loadUsers();
+  }, [groupId, userEmail]);
+
   return (
     <div className="flex flex-col min-h-screen bg-base-200">
       <header className="p-5 bg-accent shadow-md text-center text-5xl font-bold">
         Group Members
+        {/* {groupName ? groupName : "Loading..."} */}
       </header>
       {/* Main Content Area */}
       <div className="flex flex-1 p-5 gap-x-8">
         <div className="w-1/3 bg-white p-4 rounded-lg shadow-md">
           <YourTasks />
+          <ul className="text-lg">
+            {users.map((user) => (
+              // <div>{user.email}</div>
+              <div>{user}</div>
+            ))}
+          </ul>
         </div>
         <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
           <Table />
@@ -44,11 +64,3 @@ const GroupPage = (props: {
 };
 
 export default GroupPage;
-
-// {/* <ul className="text-lg">
-//   {members.map((email, index) => (
-//     <li key={index} className="p-2 border-b">
-//       {email}
-//     </li>
-//   ))}
-// </ul> */}

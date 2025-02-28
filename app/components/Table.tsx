@@ -3,6 +3,10 @@ import NewTaskBtn from "./NewTaskBtn";
 const Table = () => {
   return (
     <div className="overflow-x-auto">
+      <div>
+        <h3>Test Zustand</h3>
+        <div> . </div>
+      </div>
       <table className="table">
         {/* head */}
         <thead>

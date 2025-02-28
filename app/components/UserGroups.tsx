@@ -2,10 +2,9 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { supabase } from "@/app/lib/supabaseClient";
 import { fetchGroups } from "../hooks/fetchGroups";
 
-// needs groups
+// all good
 const UserGroups = () => {
   const { data: session } = useSession();
   const [groups, setGroups] = useState<
