@@ -1,3 +1,5 @@
+import NewTaskBtn from "./NewTaskBtn";
+
 const Table = () => {
   return (
     <div className="overflow-x-auto">
@@ -5,33 +7,52 @@ const Table = () => {
         {/* head */}
         <thead>
           <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
+            <th>Task</th>
+            <th>Leader</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {/* row 1 */}
           <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
+            <td>Dishes</td>
+            <td>Joe Rogan</td>
+            <td>In Progress</td>
           </tr>
           {/* row 2 */}
           <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
+            <td>Trash</td>
+            <td>Adolf</td>
+            <td>Ready to grade</td>
           </tr>
           {/* row 3 */}
           <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
+            <td>Wipe Counter</td>
+            <td>Iceberg Slim</td>
             <td>Red</td>
+          </tr>
+          {/* test row */}
+          <tr>
+            <td>
+              <button className="btn">make new task</button>
+            </td>
+            <td>
+              <div className="join">
+                <button className="join-item btn">«</button>
+                <button className="join-item btn">
+                  Adam 22
+                </button>
+                <button className="join-item btn">»</button>
+              </div>
+            </td>
+            <td>Red</td>
+          </tr>
+          {/* row 5 */}
+          <tr>
+            <td></td>
+            <td>
+              <NewTaskBtn />
+            </td>
           </tr>
         </tbody>
       </table>
