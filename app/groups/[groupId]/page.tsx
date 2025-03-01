@@ -1,9 +1,9 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import YourTasks from "@/app/components/YourTasks";
-import Table from "@/app/components/Table";
-import Footer from "@/app/components/Footer";
+import YourTasks from "@/app/groups/[groupId]/components/YourTasks";
+import Table from "@/app/groups/[groupId]/components/Table";
+import Footer from "@/app/groups/[groupId]/components/Footer";
 import { useGroupStore } from "@/app/hooks/useGroupStore";
 import { fetchUsers } from "@/app/hooks/fetchGroupInfo";
 

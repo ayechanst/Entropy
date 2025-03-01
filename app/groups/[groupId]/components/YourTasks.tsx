@@ -1,4 +1,4 @@
-import { useGroupStore } from "../hooks/useGroupStore";
+import { useGroupStore } from "../../../hooks/useGroupStore";
 
 const YourTasks = () => {
   const users = useGroupStore((state) => state.users);
@@ -6,8 +6,8 @@ const YourTasks = () => {
     <div className="card-body items-center text-center">
       <h2 className="card-title">Shoes!</h2>
       <ul className="text-lg">
-        {users.map((user) => (
-          <div>{user}</div>
+        {users.map((user, index) => (
+          <div key={index}>{user}</div>
         ))}
       </ul>
       <p>
