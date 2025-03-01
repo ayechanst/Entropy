@@ -1,5 +1,8 @@
 import { create } from "zustand";
-import { fetchUsers } from "@/app/hooks/fetchUsers";
+import {
+  fetchGroupName,
+  fetchUsers,
+} from "@/app/hooks/fetchGroupInfo";
 import { fetchGroups } from "./fetchGroups";
 
 interface GroupState {
@@ -7,7 +10,7 @@ interface GroupState {
   groupName: string | null;
   groupId: string | null; // already have
   fetchGroupUsers: (groupId: string) => Promise<void>;
-  // fetchGroupTasks
+  fetchGroupName: (groupId: string) => Promise<void>;
 }
 
 export const useGroupStore = create<GroupState>((set) => ({
@@ -17,5 +20,9 @@ export const useGroupStore = create<GroupState>((set) => ({
   fetchGroupUsers: async (groupId) => {
     const users: string[] = await fetchUsers(groupId);
     set({ users });
+  },
+  fetchGroupName: async (groupId) => {
+    const groupName: any = await fetchGroupName(groupId);
+    set({ groupName });
   },
 }));

@@ -3,8 +3,6 @@ import { supabase } from "@/app/lib/supabaseClient";
 import { fetchGroups } from "./fetchGroups";
 import { useSession } from "next-auth/react";
 
-// needs groupId
-// no work
 export const fetchUsers = async (groupId: string) => {
   const { data, error } = await supabase
     .from("group_members")
@@ -17,24 +15,19 @@ export const fetchUsers = async (groupId: string) => {
   }
 
   return data?.map((entry) => entry.email) ?? [];
+};
 
-  // return (
-  //   data?.map((entry) => ({
-  //     email: entry.email,
-  //   })) ?? []
-  // );
+export const fetchGroupName = async (groupId: string) => {
+  const { data, error } = await supabase
+    .from("groups")
+    .select("name, id")
+    .eq("id", groupId);
 
-  // const { data: session } = useSession();
-  // const groups = await fetchGroups(
-  //   session?.user?.email ?? ""
-  // );
-  // console.log("groups: ", groups);
-  // const group = groups.find((g) => g.id === groupId);
-
-  // if (group) {
-  //   return group.users;
-  // } else {
-  //   console.log("group not found");
-  //   return [];
-  // }
+  if (error) {
+    console.log("Error fetching groups:", error);
+    return [];
+  } else {
+    console.log("data", data);
+  }
+  return data?.map((entry) => entry.name);
 };
