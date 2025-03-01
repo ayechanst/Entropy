@@ -6,6 +6,7 @@ import Table from "@/app/groups/[groupId]/components/Table";
 import Footer from "@/app/groups/[groupId]/components/Footer";
 import { useGroupStore } from "@/app/hooks/useGroupStore";
 import { fetchUsers } from "@/app/hooks/fetchGroupInfo";
+import ModalForm from "./components/ModalForm";
 
 // this needs group info
 const GroupPage = (props: {

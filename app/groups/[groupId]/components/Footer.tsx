@@ -1,3 +1,5 @@
+import NewTaskBtn from "./NewTaskBtn";
+
 const Footer = () => {
   return (
     <div className="btm-nav">

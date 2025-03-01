@@ -1,11 +1,13 @@
+import { useState } from "react";
+import ModalForm from "./ModalForm";
 import NewTaskBtn from "./NewTaskBtn";
 
 const Table = () => {
+  const [open, setIsOpen] = useState(false);
   return (
     <div className="overflow-x-auto">
       <div>
-        <h3>Test Zustand</h3>
-        <div> . </div>
+        <h2>Tasks</h2>
       </div>
       <table className="table">
         {/* head */}
@@ -16,6 +18,7 @@ const Table = () => {
             <th>Status</th>
           </tr>
         </thead>
+
         <tbody>
           {/* row 1 */}
           <tr>

@@ -1,11 +1,12 @@
+import Link from "next/link";
+
 const NewTaskBtn = () => {
-  const handleClick = () => {
-    console.log("btn clicked!!!!!!!!!!");
-  };
   return (
-    <button className="btn" onClick={() => handleClick()}>
-      New Task
-    </button>
+    <div>
+      <Link href={"/newTask"} className="btn">
+        New Task
+      </Link>
+    </div>
   );
 };
 
