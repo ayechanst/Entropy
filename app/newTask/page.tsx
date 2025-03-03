@@ -1,11 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGroupStore } from "../hooks/useGroupStore";
 
 const NewTaskPage = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] =
     useState("");
+  // const groupUsers = useGroupStore(
+  //   (state) => state.fetchGroupUsers
+  // );
+  const users = useGroupStore((state) => state.users);
+
+  // useEffect(() => {
+  //   const loadUsers = async () => {
+  //     fetchGroupUsers(groupId);
+  //   };
+  //   loadUsers();
+  // }, [groupId]);
+
   const handleSubmit = () => console.log("form submitted");
   return (
     <div className="hero bg-base-200 min-h-screen ">
@@ -26,7 +39,6 @@ const NewTaskPage = () => {
               onChange={(e) => setTaskName(e.target.value)}
               required
             />
-
             <input
               type="text"
               placeholder="Task Description"
@@ -37,6 +49,11 @@ const NewTaskPage = () => {
               }
               required
             />
+            <ul className="text-lg">
+              {users.map((user, index) => (
+                <div key={index}>{user}</div>
+              ))}
+            </ul>
 
             {/* {emails.map((email, index) => (
               <input

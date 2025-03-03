@@ -57,9 +57,6 @@ const Table = () => {
           {/* row 5 */}
           <tr>
             <td></td>
-            <td>
-              <NewTaskBtn />
-            </td>
           </tr>
         </tbody>
       </table>
