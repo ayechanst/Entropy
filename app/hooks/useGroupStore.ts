@@ -3,12 +3,11 @@ import {
   fetchGroupName,
   fetchUsers,
 } from "@/app/hooks/fetchGroupInfo";
-import { fetchGroups } from "./fetchGroups";
 
 interface GroupState {
   users: string[];
   groupName: string | null;
-  groupId: string | null; // already have
+  groupId: string | null;
   fetchGroupUsers: (groupId: string) => Promise<void>;
   fetchGroupName: (groupId: string) => Promise<void>;
 }
