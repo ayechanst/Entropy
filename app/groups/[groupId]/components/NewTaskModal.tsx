@@ -1,55 +1,86 @@
+import { useGroupStore } from "@/app/hooks/useGroupStore";
+import { useModalState } from "@/app/hooks/useModalStore";
+import { useState } from "react";
+
 const NewTaskModal = () => {
+  const { closeModal } = useModalState();
+  const users = useGroupStore((state) => state.users);
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] =
+    useState("");
+  const [emails, setEmails] = useState<string[]>([]);
+
+  const handleCheckboxChange = (email: string) => {
+    setEmails((prev) =>
+      prev.includes(email)
+        ? prev.filter((e) => e !== email)
+        : [...prev, email]
+    );
+  };
+
+  const handleSubmit = async (e: {
+    preventDefault: () => void;
+  }) => {
+    e.preventDefault();
+    console.log("taskName: ", taskName);
+    console.log("taskDesc: ", taskDescription);
+    console.log("email List: ", emails);
+  };
+
   return (
-    <div className="hero bg-base-200 min-h-screen ">
-      <div className="hero-content text-center">
-        <div className="max-w-md">
-          <h1 className="text-5xl font-bold m-5">
-            New Task
-          </h1>
-          <form
-            // onSubmit={() => handleSubmit}
-            className="flex flex-col gap-4"
-          >
-            <input
-              type="text"
-              placeholder="Task Name"
-              className="input input-bordered input-accent w-full max-w-xs"
-              //   value={taskName}
-              //   onChange={(e) => setTaskName(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Task Description"
-              className="input input-bordered input-accent w-full max-w-xs"
-              //   value={taskDescription}
-              //   onChange={(e) =>
-              //     setTaskDescription(e.target.value)
-              //   }
-              required
-            />
-            {/* <ul className="text-lg">
-              {users.map((user, index) => (
-                <div key={index}>{user}</div>
-              ))}
-            </ul> */}
-
-            <button
-              type="button"
-              className="btn btn-outline btn-accent"
-              //   onClick={addEmailField}
-            >
-              Add another email
-            </button>
-
-            <button
-              type="submit"
-              className="btn btn-primary"
-            >
-              Create Task
-            </button>
-          </form>
-        </div>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+        {/* Close Button */}
+        <button
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          onClick={closeModal}
+        >
+          ✕
+        </button>
+        <h1 className="text-2xl font-bold mb-4">
+          New Task
+        </h1>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            placeholder="Task Name"
+            className="input input-bordered input-accent w-full"
+            onChange={(e) => setTaskName(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Task Description"
+            className="input input-bordered input-accent w-full"
+            onChange={(e) =>
+              setTaskDescription(e.target.value)
+            }
+            required
+          />
+          <ul className="text-lg text-left">
+            {users.map((user, index) => (
+              <li
+                key={index}
+                className="flex items-center gap-2"
+              >
+                <input
+                  type="checkbox"
+                  name="selected-users"
+                  className="checkbox checkbox-primary"
+                  onClick={() => handleCheckboxChange(user)}
+                  value={user}
+                />
+                <span>{user}</span>
+              </li>
+            ))}
+          </ul>
+          <button type="submit" className="btn btn-primary">
+            Create Task
+          </button>
+        </form>
       </div>
     </div>
   );

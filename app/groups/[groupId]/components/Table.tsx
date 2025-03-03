@@ -1,9 +1,11 @@
 import { useState } from "react";
 import ModalForm from "./ModalForm";
 import NewTaskBtn from "./NewTaskBtn";
+import { useModalState } from "@/app/hooks/useModalStore";
+import NewTaskModal from "./NewTaskModal";
 
 const Table = () => {
-  const [open, setIsOpen] = useState(false);
+  const { openModal } = useModalState();
   return (
     <div className="overflow-x-auto">
       <div>
@@ -56,7 +58,14 @@ const Table = () => {
           </tr>
           {/* row 5 */}
           <tr>
-            <td></td>
+            <td>
+              <button
+                className="btn"
+                onClick={() => openModal(<NewTaskModal />)}
+              >
+                New Task
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
